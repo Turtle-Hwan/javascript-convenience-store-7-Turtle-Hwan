@@ -43,13 +43,22 @@ class ReadFile {
         quantity: row[2],
       };
     });
-    console.log(products);
   }
 
   readPromotions() {
     const promotionsFile = fs.readFileSync("./public/promotions.md", "utf-8");
     const promotionsArray = promotionsFile.trim().split("\r\n");
-    console.log(promotionsArray);
+
+    promotionsArray.slice(1).forEach((promotion) => {
+      const row = promotion.split(",");
+
+      promotions[row[0]] = {
+        buy: row[1],
+        get: row[2],
+        start_date: row[3],
+        end_date: row[4],
+      };
+    });
   }
 }
 
@@ -66,6 +75,13 @@ export const products = {
   // },
 };
 
-export const promotions = {};
+export const promotions = {
+  // "탄산2+1": {
+  //   buy: 2,
+  //   get: 1,
+  //   start_date: "2024-01-01",
+  //   end_date: "2024-12-31",
+  // }
+};
 
 export default App;
