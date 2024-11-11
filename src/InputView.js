@@ -13,7 +13,6 @@ const INPUT_MESSAGE = {
 
 export const InputView = {
   async readItem() {
-    whil;
     const inputs = await Console.readLineAsync(INPUT_MESSAGE.BUY_PRODUCT);
 
     // [ [ '사이다', '2' ], [ '감자칩', '1' ] ]
@@ -23,5 +22,6 @@ export const InputView = {
       .map((input) => input.slice(1, -1).split("-"));
 
     OutputView.validateInput(inputArrays);
+    OutputView.validateInputAmount(inputArrays);
   },
 };

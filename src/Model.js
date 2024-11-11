@@ -47,6 +47,21 @@ export const Model = {
     }
     return false;
   },
+
+  getProductAllAmount(productName) {
+    console.log(
+      Object.keys(products[productName]).reduce((acc, promotion) => {
+        acc += Number(products[productName][promotion].quantity);
+        return acc;
+      }, 0)
+    );
+    return Number(
+      Object.keys(products[productName]).reduce((acc, promotion) => {
+        acc += products[productName][promotion].quantity;
+        return acc;
+      }, 0)
+    );
+  },
 };
 
 export const products = {

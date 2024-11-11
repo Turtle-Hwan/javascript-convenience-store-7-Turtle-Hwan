@@ -1,6 +1,6 @@
 import { Console } from "@woowacourse/mission-utils";
 import { Utils } from "./utils.js";
-import { products } from "./Model.js";
+import { Model, products } from "./Model.js";
 
 const OUTPUT_MESSAGE = Object.freeze({
   PRINT_PRODUCTS_INFO: "안녕하세요. W편의점입니다.\n현재 보유하고 있는 상품입니다.\n",
@@ -51,6 +51,14 @@ export const OutputView = {
 
       if (!Number.isInteger(Number(input[1])) || Number(input[1]) <= 0) {
         throw new Error(OUTPUT_MESSAGE.ERROR.PREFIX + OUTPUT_MESSAGE.ERROR.INVAILD_FORMAT);
+      }
+    });
+  },
+
+  validateInputAmount(inputs) {
+    inputs.forEach((input) => {
+      if (Number(Model.getProductAllAmount(input[0])) < Number(input[1])) {
+        throw new Error(OUTPUT_MESSAGE.ERROR.PREFIX + OUTPUT_MESSAGE.ERROR.INVALID_QUANTITY);
       }
     });
   },
