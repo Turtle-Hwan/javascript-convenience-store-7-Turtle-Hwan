@@ -31,15 +31,19 @@ class App {
     //   - [ ] 행사 할인 / / 금액
     //   - [ ] 멤버십 할인 / / 금액
     //   - [ ] 내실 돈 / / 금액
-    const receipt = this.calcReceipt(inputArrays, isMembership);
+    const receipt = this.#calcReceipt(inputArrays, isMembership);
     OutputView.printReceipt(receipt);
 
     // - [ ] 구매하고 싶은 다른 상품 여부 입력받기
     //   - [ ] if Y : 반복
     //   - [ ] if N : 프로그램 종료
+    const isAdditionalBuy = await InputView.readAdditionalBuy();
+    if (isAdditionalBuy) {
+      this.run();
+    }
   }
 
-  calcReceipt(inputArrays, isMembership) {
+  #calcReceipt(inputArrays, isMembership) {
     const receipt = {
       products: [],
       promotions: [],
@@ -79,12 +83,15 @@ class App {
     }, 0);
 
     receipt.totalQuantity = receipt.products.reduce((acc, product) => {
-      acc += product.quantity;
+      acc += Number(product.quantity);
       return acc;
     }, 0);
 
     if (isMembership) {
       receipt.membership = (receipt.total - receipt.discount) * 0.3;
+      if (receipt.membership > 8000) {
+        receipt.membership = 8000;
+      }
     }
 
     receipt.payPrice = receipt.total - receipt.discount - receipt.membership;
