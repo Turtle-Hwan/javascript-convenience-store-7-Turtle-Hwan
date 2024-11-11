@@ -38,6 +38,7 @@ export class ReadFile {
 }
 
 export const Model = {
+  //프로모션 적용 가능 날짜 확인
   isInPromotionDate(promotionName) {
     if (
       promotions[promotionName].start_date <= Utils.nowDate() &&

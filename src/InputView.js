@@ -1,5 +1,6 @@
 import { Console } from "@woowacourse/mission-utils";
 import { OutputView } from "./OutputView.js";
+import { Model } from "./Model.js";
 
 const INPUT_MESSAGE = {
   BUY_PRODUCT: "\n구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])\n",
@@ -23,5 +24,40 @@ export const InputView = {
 
     OutputView.validateInput(inputArrays);
     OutputView.validateInputAmount(inputArrays);
+
+    return inputArrays;
+  },
+
+  //프로모션 적용 가능 개수 확인
+  confirmPromotionCount(inputArrays, products) {
+    inputArrays.forEach((input) => {
+      const productName = input[0];
+      const get = input[1];
+      const promotionName = Object.keys(products[productName]).find(
+        (promotion) => products[productName][promotion].quantity < get
+      );
+
+      if (
+        promotionName !== undefined &&
+        promotionName !== "null" &&
+        Model.isInPromotionDate(promotionName)
+      ) {
+        //this.readPromotion(productName, get);
+      }
+    });
+  },
+
+  async readPromotion(productName, get) {
+    const input = await Console.readLineAsync(INPUT_MESSAGE.PROMOTION_INFO(productName, get));
+    return input;
+  },
+
+  async readMembership() {
+    const input = await Console.readLineAsync(INPUT_MESSAGE.MEMBERSHIP);
+
+    if (input === "Y") {
+      return true;
+    }
+    return false;
   },
 };
