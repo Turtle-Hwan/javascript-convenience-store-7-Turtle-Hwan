@@ -1,4 +1,5 @@
 import fs from "fs";
+import { Utils } from "./utils.js";
 
 export class ReadFile {
   readProducts() {
@@ -35,6 +36,18 @@ export class ReadFile {
     });
   }
 }
+
+export const Model = {
+  isInPromotionDate(promotionName) {
+    if (
+      promotions[promotionName].start_date <= Utils.nowDate() &&
+      Utils.nowDate() <= promotions[promotionName].end_date
+    ) {
+      return true;
+    }
+    return false;
+  },
+};
 
 export const products = {
   // 콜라: {

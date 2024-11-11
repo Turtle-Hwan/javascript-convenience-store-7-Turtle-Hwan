@@ -1,5 +1,6 @@
+import { InputView } from "./InputView.js";
 import { OutputView } from "./OutputView.js";
-import { products, ReadFile } from "./ReadFile.js";
+import { products, ReadFile } from "./Model.js";
 
 class App {
   async run() {
