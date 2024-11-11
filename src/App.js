@@ -1,4 +1,5 @@
-import { ReadFile } from "./ReadFile.js";
+import {OutputView} from "./OutputView.js";
+import {products, ReadFile} from "./ReadFile.js";
 
 class App {
   async run() {
@@ -7,10 +8,10 @@ class App {
     readFile.readProducts();
     // - [ ] 프로모션 상품 파일에서 읽어오기
     readFile.readPromotions();
-
     // - [ ] 현재 보유 상품 목록 화면에 출력하기
-
+    OutputView.printProducts(products);
     // - [ ] 구매할 상품명과 수량 입력받기
+
     // - [ ] if 프로모션 할인 적용 안됨 :
     //       프로모션 적용 안됨 안내 출력 및 구매 의사(Y/N) 입력받기
     // - [ ] 멤버십 할인 여부(Y/N) 입력받기
