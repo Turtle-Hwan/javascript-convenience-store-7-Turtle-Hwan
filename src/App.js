@@ -31,11 +31,76 @@ class App {
     //   - [ ] 행사 할인 / / 금액
     //   - [ ] 멤버십 할인 / / 금액
     //   - [ ] 내실 돈 / / 금액
+    const receipt = this.calcReceipt(inputArrays, isMembership);
+    OutputView.printReceipt(receipt);
 
     // - [ ] 구매하고 싶은 다른 상품 여부 입력받기
     //   - [ ] if Y : 반복
     //   - [ ] if N : 프로그램 종료
   }
+
+  calcReceipt(inputArrays, isMembership) {
+    const receipt = {
+      products: [],
+      promotions: [],
+      total: 0,
+      totalQuantity: 0,
+      discount: 0,
+      membership: 0,
+      payPrice: 0,
+    };
+
+    inputArrays.forEach((input) => {
+      const productName = input[0];
+      const quantity = input[1];
+
+      const promotionName = Object.keys(products[productName]).find(
+        (promotion) => products[productName][promotion].quantity < quantity
+      );
+
+      if (promotionName !== undefined && promotionName !== "null") {
+        receipt.promotions.push({
+          name: productName,
+          quantity: quantity,
+          price: products[productName][promotionName].price,
+        });
+      } else {
+        receipt.products.push({
+          name: productName,
+          quantity: quantity,
+          price: products[productName]["null"].price,
+        });
+      }
+    });
+
+    receipt.total = receipt.products.reduce((acc, product) => {
+      acc += product.price * product.quantity;
+      return acc;
+    }, 0);
+
+    receipt.totalQuantity = receipt.products.reduce((acc, product) => {
+      acc += product.quantity;
+      return acc;
+    }, 0);
+
+    if (isMembership) {
+      receipt.membership = (receipt.total - receipt.discount) * 0.3;
+    }
+
+    receipt.payPrice = receipt.total - receipt.discount - receipt.membership;
+
+    return receipt;
+  }
 }
+
+// const receipt = {
+// products: [
+//   { name: "사이다", quantity: 2, price: 2000 },
+//   { name: "감자칩", quantity: 1, price: 1000 },
+// ],
+// promotions: [
+//   { name: "사이다", quantity: 1, price: 1000 },
+// ],
+// };
 
 export default App;

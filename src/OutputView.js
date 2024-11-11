@@ -15,6 +15,17 @@ const OUTPUT_MESSAGE = Object.freeze({
     }
     return `- ${productName} ${Utils.printPrice(info.price)}원 ${info.quantity}개 ${promotion}`;
   },
+  PRINT_RECEIPT: {
+    TITLE: `==============W 편의점================\n상품명\t\t수량\t금액`,
+    PRODUCT: (productName, quantity, price) => `${productName}\t\t${quantity}\t${price}`,
+    PROMOTION: `=============증	정===============`,
+    PROMOTION_PRODUCT: (productName, quantity) => `${productName}\t\t${quantity}`,
+    DIVIDER: `====================================`,
+    TOTAL: (totalQuantity, totalPrice) => `총 구매액\t\t${totalQuantity}\t${totalPrice}`,
+    DISCOUNT: (discountPrice) => `행사 할인\t\t\t-${discountPrice}`,
+    MEMBERSHIP: (discountPrice) => `멤버십 할인\t\t\t-${discountPrice}`,
+    PAY: (payPrice) => `내실돈\t\t\t${payPrice}`,
+  },
   ERROR: {
     PREFIX: `[ERROR] `,
     INVAILD_FORMAT: `올바르지 않은 형식으로 입력했습니다. 다시 입력해 주세요.`,
@@ -61,5 +72,30 @@ export const OutputView = {
         throw new Error(OUTPUT_MESSAGE.ERROR.PREFIX + OUTPUT_MESSAGE.ERROR.INVALID_QUANTITY);
       }
     });
+  },
+
+  printReceipt(receipt) {
+    Console.print(OUTPUT_MESSAGE.PRINT_RECEIPT.TITLE);
+
+    receipt.products.forEach((product) => {
+      Console.print(
+        OUTPUT_MESSAGE.PRINT_RECEIPT.PRODUCT(product.name, product.quantity, product.price)
+      );
+    });
+
+    Console.print(OUTPUT_MESSAGE.PRINT_RECEIPT.PROMOTION);
+    receipt.promotions.forEach((promotion) => {
+      Console.print(
+        OUTPUT_MESSAGE.PRINT_RECEIPT.PROMOTION_PRODUCT(promotion.name, promotion.quantity)
+      );
+    });
+
+    Console.print(OUTPUT_MESSAGE.PRINT_RECEIPT.DIVIDER);
+    Console.print(
+      OUTPUT_MESSAGE.PRINT_RECEIPT.TOTAL(receipt.totalQuantity, Utils.printPrice(receipt.total))
+    );
+    Console.print(OUTPUT_MESSAGE.PRINT_RECEIPT.DISCOUNT(Utils.printPrice(receipt.discount)));
+    Console.print(OUTPUT_MESSAGE.PRINT_RECEIPT.MEMBERSHIP(Utils.printPrice(receipt.membership)));
+    Console.print(OUTPUT_MESSAGE.PRINT_RECEIPT.PAY(Utils.printPrice(receipt.payPrice)));
   },
 };

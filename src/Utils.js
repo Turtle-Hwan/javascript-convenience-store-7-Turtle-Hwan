@@ -2,7 +2,7 @@ import { DateTimes } from "@woowacourse/mission-utils";
 
 export const Utils = {
   printPrice(price) {
-    return price.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   },
 
   nowDate() {
