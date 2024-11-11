@@ -1,6 +1,5 @@
 {
-  "arrowParens": "avoid",
-  "bracketSpacing": false,
+  "bracketSpacing": true,
   "printWidth": 100,
   "semi": true,
   "useTabs": false

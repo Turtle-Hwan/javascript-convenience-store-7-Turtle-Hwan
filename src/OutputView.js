@@ -1,5 +1,5 @@
-import {Console} from "@woowacourse/mission-utils";
-import {Utils} from "./utils.js";
+import { Console } from "@woowacourse/mission-utils";
+import { Utils } from "./utils.js";
 
 const OUTPUT_MESSAGE = Object.freeze({
   PRINT_PRODUCTS_INFO: "안녕하세요. W편의점입니다.\n현재 보유하고 있는 상품입니다.\n",
@@ -27,10 +27,10 @@ export const OutputView = {
   printProducts(products) {
     Console.print(OUTPUT_MESSAGE.PRINT_PRODUCTS_INFO);
 
-    Object.keys(products).forEach(name => {
+    Object.keys(products).forEach((name) => {
       const promotions = Object.keys(products[name]);
 
-      promotions.forEach(promotion => {
+      promotions.forEach((promotion) => {
         Console.print(OUTPUT_MESSAGE.PRINT_PRODUCTS(name, products[name][promotion], promotion));
       });
 
